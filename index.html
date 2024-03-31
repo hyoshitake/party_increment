@@ -1,0 +1,73 @@
+<html>
+<head>
+  <title>LT++</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+
+    .container {
+      width:  100vw;
+      height: 100vh;
+      /* 水平・垂直方向の中央揃え */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    #number {
+      color: white;
+      font-size: 256px;
+    }
+
+    #button {
+      color: white;
+    }
+  </style>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+</head>
+<body>
+  <div class="container">
+    <div class="main">
+      <div id="number" class="text-center">3</div>
+      <div id="button" class="button">カウントアップする</div>
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
+  <script>
+    // ボタンをクリックしたときの処理
+    document.querySelector("#button").addEventListener("click", function (e) {
+
+      // 今の数値をフェードアウトする
+      document.querySelector("#number").classList.add('animate__animated', 'animate__fadeOutDown');
+      document.querySelector("#number").addEventListener('animationend', () => {
+        // id="number"のテキストを1増やす
+        document.querySelector("#number").textContent = parseInt(document.querySelector("#number").textContent) + 1;
+        document.querySelector("#number").classList.remove('animate__fadeOutDown');
+        document.querySelector("#number").classList.add('animate__fadeInDown');
+
+        document.querySelector("#number").addEventListener('animationend', () => {
+          party.confetti(document.querySelector("#number"));
+          // 10回繰り返す
+          for (let i = 0; i < 15; i++) {
+            setTimeout(function () {
+              party.confetti(document.querySelector("#number"));
+            }, i * 200);
+          }
+        }, {once: true});
+      }, {once: true});
+    });
+  </script>
+</body>
+</html>
